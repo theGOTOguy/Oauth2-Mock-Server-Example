@@ -42,9 +42,9 @@ class AuthHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def start_server():
-        server = HTTPServer(('localhost', local_capture_port), AuthHandler)
-        print("Listening on http://localhost:{}/callback for the authorization code...".format(local_capture_port))
-        server.handle_request()  # Handle a single request and then stop
+        with HTTPServer(('localhost', local_capture_port), AuthHandler) as server:
+            print("Listening on http://localhost:{}/callback for the authorization code...".format(local_capture_port))
+            server.handle_request()  # Handle a single request and then stop
 
 # Step 1: Capture Authorization Code
 def get_authorization_code():
