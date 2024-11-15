@@ -42,14 +42,14 @@ class AuthHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def start_server():
-        server = HTTPServer(('localhost', local_capture_port), AuthHandler)
-        print("Listening on http://localhost:{}/callback for the authorization code...".format(local_capture_port))
-        server.handle_request()  # Handle a single request and then stop
+        with HTTPServer(('localhost', local_capture_port), AuthHandler) as server:
+            print("Listening on http://localhost:{}/callback for the authorization code...".format(local_capture_port))
+            server.handle_request()  # Handle a single request and then stop
 
 # Step 1: Capture Authorization Code
 def get_authorization_code():
     # Start the local server in a separate thread to capture the code
-    server_thread = threading.Thread(target=AuthHandler.start_server)
+    server_thread = threading.Thread(target=AuthHandler.start_server, daemon=True)
     server_thread.start()
 
     # Open the authorization URL in a browser or print the URL to manually open
@@ -83,7 +83,8 @@ def get_authorization_code():
 # Step 2: Exchange Authorization Code for Access Token
 def get_access_token(auth_code):
     # Start the local server in a separate thread to capture the code
-    server_thread = threading.Thread(target=AuthHandler.start_server)
+    # Starting it as a daemon will kill it when this script finishes executing
+    server_thread = threading.Thread(target=AuthHandler.start_server, daemon=True)
     server_thread.start()
 
     data = {
@@ -108,6 +109,7 @@ def get_access_token(auth_code):
         signing_key = jwks_client.get_signing_key_from_jwt(my_jwt)
 
         print("Decoded JWT:", jwt.decode(my_jwt, signing_key.key, audience=audience, algorithms=["RS256"]))
+        
         return access_token
     else:
         raise Exception("Failed to get access token:", response.text)
