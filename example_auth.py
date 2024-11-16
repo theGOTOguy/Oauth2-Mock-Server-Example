@@ -6,18 +6,18 @@ import jwt
 from jwt import PyJWKClient
 
 # Configuration
-client_id = 'your_client_id'
+client_id = "your_client_id_part_two"
 client_secret = 'your_client_secret'
 # redirect_uri = 'http://localhost:8080/callback'
 scopes = 'openid profile email'
-authorization_url = "http://localhost:8080/default/authorize"
-well_known_url = "http://localhost:8080/default/jwks"
-token_url = "http://localhost:8080/default/token"
-userinfo_url = "http://localhost:8080/default/userinfo"
+authorization_url = "http://localhost:8080/meshwith/authorize"
+well_known_url = "http://localhost:8080/meshwith/jwks"
+token_url = "http://localhost:8080/meshwith/token"
+userinfo_url = "http://localhost:8080/meshwith/userinfo"
 username = "test@test.com"
 password = "test"
-audience = client_id 
-claims = {}  # Additional claims to request.
+audience = 'testCode'
+claims = {"aud": audience}  # Additional claims to request.
 local_capture_port = 3001
 
 # Local Server to Capture Authorization Code
@@ -57,12 +57,11 @@ def get_authorization_code():
         'client_id': client_id,
         'redirect_uri': 'http://localhost:{}/callback'.format(local_capture_port),
         'response_type': 'code',
-        'scope': scopes
+        'scope': scopes,
     }
 
     data = {
         'username': username,
-        'claims': claims
     }
 
     response = requests.post(authorization_url, params=params, data=data)
@@ -92,9 +91,10 @@ def get_access_token(auth_code):
         'client_id': client_id,
         'client_secret': client_secret,
         'code': auth_code,
+        'claims': claims
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    
+
     response = requests.post(token_url, data=data, headers=headers)
 
     if response.ok:
@@ -138,3 +138,4 @@ if __name__ == "__main__":
             fetch_user_info(token)
     except Exception as e:
         print("Error:", e)
+
