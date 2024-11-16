@@ -17,7 +17,7 @@ docker pull ghcr.io/navikt/mock-oauth2-server:2.1.10
 
 You can now run the server with:
 ```bash
-docker compose up
+docker-compose up
 ```
 
 Note that, if the server is running in this way, we can get a login page by sending, e.g., a request to [this url](http://localhost:8080/default/authorize?client_id=foo&response_type=code&redirect_uri=http://localhost:3000&scope=openid).
