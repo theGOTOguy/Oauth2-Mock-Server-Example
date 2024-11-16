@@ -1,7 +1,7 @@
 # Oauth2-Mock-Server-Example
 Example of getting auth tokens from the OAuth2 Mock server
 
-We will use [https://github.com/navikt/mock-oauth2-server](Navikt's Mock Oauth2 Server) to back this example.
+We will use [Navikt's Mock Oauth2](https://github.com/navikt/mock-oauth2-server) Server to back this example.
 In particular, this guide will walk you through:
 
 1)  Starting up the Docker OAuth2 server with appropriate settings.
