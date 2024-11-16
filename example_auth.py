@@ -16,8 +16,7 @@ token_url = "http://localhost:8080/meshwith/token"
 userinfo_url = "http://localhost:8080/meshwith/userinfo"
 username = "test@test.com"
 password = "test"
-audience = 'testCode'
-claims = {"aud": audience}  # Additional claims to request.
+audience = 'testCode'  # Matches compose.yml
 local_capture_port = 3001
 
 # Local Server to Capture Authorization Code
@@ -58,6 +57,7 @@ def get_authorization_code():
         'redirect_uri': 'http://localhost:{}/callback'.format(local_capture_port),
         'response_type': 'code',
         'scope': scopes,
+        'audience': audience
     }
 
     data = {
@@ -91,7 +91,6 @@ def get_access_token(auth_code):
         'client_id': client_id,
         'client_secret': client_secret,
         'code': auth_code,
-        'claims': claims
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
