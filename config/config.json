@@ -10,8 +10,7 @@
                     "claims": {
                         "sub": "${client_id}",
                         "aud": [
-                            "testCode" ],
-                        "scopes": "${scopes}"
+                            "testCode" ]
                     }   
                 }   
             ]   
