@@ -15,9 +15,9 @@ services:
                           "requestParam": "grant_type",
                           "match": "authorization_code",
                           "claims": {
+                              "scope": "${scope}",
                               "aud": [
-                                  "testCode" ],
-                              "scopes": "custom scopes"
+                                  "testCode" ]
                           }   
                       }   
                   ]   

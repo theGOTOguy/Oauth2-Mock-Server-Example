@@ -1,4 +1,5 @@
 import requests
+import os
 from urllib.parse import urlparse, parse_qs
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
@@ -47,6 +48,7 @@ class AuthHandler(BaseHTTPRequestHandler):
 
 # Step 1: Capture Authorization Code
 def get_authorization_code():
+    
     # Start the local server in a separate thread to capture the code
     server_thread = threading.Thread(target=AuthHandler.start_server, daemon=True)
     server_thread.start()
@@ -90,11 +92,15 @@ def get_access_token(auth_code):
         'grant_type': 'authorization_code',
         'client_id': client_id,
         'client_secret': client_secret,
+        'scope': scopes,
         'code': auth_code,
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
     response = requests.post(token_url, data=data, headers=headers)
+    print(response.request.url)
+    print(response.request.body)
+    print(response.request.headers)
 
     if response.ok:
         token_data = response.json()
