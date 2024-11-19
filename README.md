@@ -1,7 +1,7 @@
 # Oauth2-Mock-Server-Example
 Example of getting auth tokens from the OAuth2 Mock server
 
-We will use [https://github.com/navikt/mock-oauth2-server](Navikt's Mock Oauth2 Server) to back this example.
+We will use [Navikt's Mock Oauth2](https://github.com/navikt/mock-oauth2-server) Server to back this example.
 In particular, this guide will walk you through:
 
 1)  Starting up the Docker OAuth2 server with appropriate settings.
@@ -17,7 +17,7 @@ docker pull ghcr.io/navikt/mock-oauth2-server:2.1.10
 
 You can now run the server with:
 ```bash
-docker run -p 8080:8080 ghcr.io/navikt/mock-oauth2-server:2.1.10
+docker-compose up
 ```
 
 Note that, if the server is running in this way, we can get a login page by sending, e.g., a request to [this url](http://localhost:8080/default/authorize?client_id=foo&response_type=code&redirect_uri=http://localhost:3000&scope=openid).

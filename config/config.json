@@ -1,0 +1,20 @@
+{
+    "tokenCallbacks": [
+        {   
+            "issuerId": "meshwith",
+            "tokenExpiry": 120,
+            "requestMappings": [
+                {
+                    "requestParam": "grant_type",
+                    "match": "authorization_code",
+                    "claims": {
+                        "sub": "${client_id}",
+                        "aud": [
+                            "testCode" ],
+                        "scopes": "${scopes}"
+                    }   
+                }   
+            ]   
+        }  
+    ]   
+}
