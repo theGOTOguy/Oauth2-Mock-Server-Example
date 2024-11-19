@@ -8,9 +8,10 @@
                     "requestParam": "grant_type",
                     "match": "authorization_code",
                     "claims": {
+                        "sub": "${client_id}",
                         "aud": [
                             "testCode" ],
-                        "scope": "${scope}"
+                        "scopes": "${scopes}"
                     }   
                 }   
             ]   

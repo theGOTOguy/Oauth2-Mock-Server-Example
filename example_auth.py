@@ -67,6 +67,8 @@ def get_authorization_code():
     }
 
     response = requests.post(authorization_url, params=params, data=data)
+    print(response.request.url)
+    print(response.request.body)
 
     if response.status_code != 200:
         raise Exception("{} when trying to authorize: {}".format(response.status_code, response.content))
@@ -88,11 +90,15 @@ def get_access_token(auth_code):
     server_thread = threading.Thread(target=AuthHandler.start_server, daemon=True)
     server_thread.start()
 
+    # For some odd reason, our mock server refuses to recognize 'scope' (singular)
+    # So we have to make sure that we have 'scopes' (plural) in our request
+    # This applies ONLY to access token - the server will refuse a 'scopes' (plural)
+    # request for the authorization code
     data = {
         'grant_type': 'authorization_code',
         'client_id': client_id,
         'client_secret': client_secret,
-        'scope': scopes,
+        'scopes': scopes,
         'code': auth_code,
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -100,7 +106,6 @@ def get_access_token(auth_code):
     response = requests.post(token_url, data=data, headers=headers)
     print(response.request.url)
     print(response.request.body)
-    print(response.request.headers)
 
     if response.ok:
         token_data = response.json()
