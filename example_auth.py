@@ -98,7 +98,6 @@ def get_access_token(auth_code):
         'grant_type': 'authorization_code',
         'client_id': client_id,
         'client_secret': client_secret,
-        'scopes': scopes,
         'code': auth_code,
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}

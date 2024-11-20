@@ -29,3 +29,8 @@ virtualenv venv -p python3
 pip install -r requirements.txt
 venv/bin/python example_auth.txt
 ```
+
+## Why Aren't Scopes Attached to the Access Token?
+
+[navikt's server doesn't include it because nimbus stopped doing so](https://github.com/jenspav/mock-oauth2-server/commit/25701a98f5f0ba7295df460043b7590a9fc58e9f)
+[We also tried this one, but a bug prevents scopes from working.  It's now been six months and they haven't cut a new release.](https://github.com/axa-group/oauth2-mock-server/issues/259)
